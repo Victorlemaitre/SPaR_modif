@@ -31,6 +31,13 @@ We provide a high-quality SFT dataset for instruction-following tasks and the da
 ## Quick Start
 For all codes, we have added `#TODO` comments to indicate places in the code that need modification before running. Please update the relevant parts as noted before executing each file.
 
+### Instruction Evolve
+```bash
+cd src
+
+python instruction_evolve.py
+```
+
 ### Data Construction
 To construct the iterative training data yourself, run the following command
 ```bash
