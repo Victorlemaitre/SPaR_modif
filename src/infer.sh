@@ -1,6 +1,6 @@
 gpus=(0)
 batch=1 # num gpus
-num=10 # samples
+num=100 # samples
 
 len=$((num / batch + 1))
 echo $len
@@ -25,7 +25,7 @@ do
         python infer.py --begin ${b[$i]} \
         --end ${e[$i]} \
         --gpu ${gpus[$i]} \
-        --output_path /lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_prompt.json/vllm_output_$i.json
+        --output_path /lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/first_rep/vllm_output_$i.json
         echo $i
     )&
 done

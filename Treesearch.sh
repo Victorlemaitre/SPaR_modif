@@ -25,6 +25,17 @@ module load vllm/0.5.4
 
 set -x # activate echo of
 
+cd src
+
+
+bash infer.sh
+
+python process_data.py "infer"
+
+bash judge.sh
+
+python process_data.py "judge"
+
 MODEL_PATH="/lustre/fswork/projects/rech/mpz/uip95qy/Qwen2.5-0.5B"
 VLLM_PORT=8000                       # default port used by vllm
 LOGFILE="vllm_server.log"
@@ -45,19 +56,9 @@ echo "[INFO] vLLM server is up."
 
 # START
 
-cd src
-
-bash infer.sh
-
-python process_data.py
-
-bash judge.py
-
-python process_data.py
-
 python tree_search.py
 
-python process_data.py
+python process_data.py "tree"
 
 
 # === OPTIONAL: KILL vLLM SERVER ===
@@ -65,3 +66,4 @@ echo "[INFO] Shutting down vLLM server..."
 kill $VLLM_PID
 
 echo "[INFO] All tasks completed."
+

@@ -17,7 +17,7 @@ from transformers import AutoTokenizer
 
 
 # TODO: change data file
-with open('/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_first_resp_process.json', encoding='utf-8') as f:
+with open('/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/first_rep_process.json', encoding='utf-8') as f:
     data = json.load(f)[args.begin: args.end]
 
 
@@ -35,7 +35,7 @@ Final Judgement (if the Output accurately follows the Prompt): (Yes or No)""".fo
 
 
 # TODO: check keys
-tmp = [{'messages': [{'role': 'user', 'content': build_judge_template(i['prompt'], i['response'])}]} for i in data]
+tmp = [{'messages': [{'role': 'user', 'content': build_judge_template(i['messages'][0]['content'], i['response'])}]} for i in data]
 
 # TODO
 model_path = '/lustre/fswork/projects/rech/mpz/uip95qy/Qwen2.5-0.5B'
@@ -79,6 +79,8 @@ for output, i in zip(outputs, data):
     
     i['generator'] = 'llama3-8b-instruct'
     res.append(i)
+
+print(args.output_path)
 
 with open(args.output_path, 'w', encoding='utf-8') as f:
     json.dump(res, f, indent=4, ensure_ascii=False)

@@ -17,10 +17,13 @@ from transformers import AutoTokenizer
 
 
 # TODO: change data path, there should exist the key "prompt"
-with open('/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_prompt.json', encoding='utf-8') as f:
+with open('/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_100_prompt.json', encoding='utf-8') as f:
     data = json.load(f)[args.begin: args.end]
 
-tmp = [{'messages': [{'role': 'user', 'content': i['content']}]} for i in data]
+
+
+
+tmp = [{'messages': [{'role': 'user', 'content': i['messages'][0]['content']}]} for i in data]
 
 
 # Create an LLM.
@@ -64,6 +67,8 @@ for output, i in zip(outputs, data):
     i['generator'] = 'llama3-8b-instruct'
     # i['generator'] = 'mistrial-7b-instruct'
     res.append(i)
+
+print(args.output_path)
 
 with open(args.output_path, 'w', encoding='utf-8') as f:
     json.dump(res, f, indent=4, ensure_ascii=False)

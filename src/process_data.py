@@ -1,11 +1,16 @@
 import json
 import random
 import re
+import argparse
 
+parser = argparse.ArgumentParser(description="Process a string argument.")
+parser.add_argument('input_string', type=str, help='Input string')
 
+args = parser.parse_args()
+nb_gpu = 1
 def process_gen_res(input_path, output_path):
     d = []
-    for i in range(8):
+    for i in range(nb_gpu):
         with open(f'{input_path}/vllm_output_{i}.json', encoding='utf-8') as f:
             d.extend(json.load(f))
 
@@ -46,7 +51,7 @@ def get_acc(resp):
 
 def process_score_res_voting(input_path, output_path):
     l = []
-    for i in range(8):
+    for i in range(nb_gpu):
         with open(f'{input_path}/vllm_output_{i}.json', encoding='utf-8') as f:
             l.extend(json.load(f))
 
@@ -77,8 +82,8 @@ def process_score_res_voting(input_path, output_path):
         res_id = int(i['id'].split('_')[1])
         if prompt_id not in res:
             res[prompt_id] = {
-                'original_prompt': i['original_prompt'],
-                'prompt': i['prompt'],
+                'original_prompt': i['messages'][0]['content'],
+                'prompt': i['messages'][0]['content'],
                 'output': [],
                 'acc': [],
                 'critique': [],
@@ -201,7 +206,7 @@ def process_rft_data(input_tree_search_path, input_judge_path, output_path):
                 ]
             })
     l = []
-    for i in range(8):
+    for i in range(nb_gpu):
         with open(f'{input_judge_path}/vllm_output_{i}.json', encoding='utf-8') as f:
             l.extend(json.load(f))
 
@@ -283,22 +288,23 @@ def process_rft_data(input_tree_search_path, input_judge_path, output_path):
 
 
 if __name__ == '__main__':
-    input_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_first_resp.json'
-    output_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_first_resp_process.json'
-    process_gen_res(input_path, output_path)
+    input_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/first_rep'
+    output_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/first_rep_process.json'
+    if args.input_string=="infer":process_gen_res(input_path, output_path)
     
     
-    input_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_juge.json'
-    output_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_juge_process.json'
-    process_score_res_voting(input_path, output_path)
+    input_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/juge'
+    output_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/juge_process.json'
+    if args.input_string=="judge":process_score_res_voting(input_path, output_path)
     
     
-    input_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_tree.json'
-    output_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_tree_process.json'
-    process_dpo_data(input_path, output_path)
+    input_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/tree.json'
+    output_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/tree_process.json'
+    if args.input_string=="tree":process_dpo_data(input_path, output_path)
     
-    
+    """
     input_tree_search_path = ''
     input_judge_path = ''
     output_path = ''
-    process_rft_data(input_tree_search_path, input_judge_path, output_path)
+    process_rft_data(input_tree_search_path, input_judge_path, output_path)"""
+	

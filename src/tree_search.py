@@ -96,8 +96,8 @@ if __name__ == '__main__':
 
     
     # TODO: change file path
-    input_file = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_juge_process.json'
-    output_file = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_tree.json'
+    input_file = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/juge_process.json'
+    output_file = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/tree.json'
 
     if not os.path.exists(output_file):
         x = open(output_file, 'w')
