@@ -17,7 +17,7 @@ def chat_gpt(messages, counter, error_count):
     for i, m in enumerate(messages):
         try:
             # TODO: change model path, it should be same as the name deployed with vllm
-            task = ToT_Task(m['prompt'], m['response'], m['critique'], root_value=0, propose_method='llama', algorithm='bfs', refine_model_path='', critique_model_path='', openai_api_base=m['openai_api_base'])
+            task = ToT_Task(m['prompt'], m['response'], m['critique'], root_value=0, propose_method='llama', algorithm='bfs', refine_model_path='/lustre/fswork/projects/rech/mpz/uip95qy/Qwen2.5-0.5B', critique_model_path='/lustre/fswork/projects/rech/mpz/uip95qy/Qwen2.5-0.5B', openai_api_base=m['openai_api_base'])
             solution, root, final_node = task.run()
             m['final_node'] = {
                 'response': final_node.response,
@@ -96,8 +96,8 @@ if __name__ == '__main__':
 
     
     # TODO: change file path
-    input_file = ''
-    output_file = ''
+    input_file = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_juge_process.json'
+    output_file = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_tree.json'
 
     if not os.path.exists(output_file):
         x = open(output_file, 'w')

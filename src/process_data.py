@@ -283,18 +283,18 @@ def process_rft_data(input_tree_search_path, input_judge_path, output_path):
 
 
 if __name__ == '__main__':
-    input_path = ''
-    output_path = ''
+    input_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_first_resp.json'
+    output_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_first_resp_process.json'
     process_gen_res(input_path, output_path)
     
     
-    input_path = ''
-    output_path = ''
+    input_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_juge.json'
+    output_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_juge_process.json'
     process_score_res_voting(input_path, output_path)
     
     
-    input_path = ''
-    output_path = ''
+    input_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_tree.json'
+    output_path = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_tree_process.json'
     process_dpo_data(input_path, output_path)
     
     

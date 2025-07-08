@@ -17,15 +17,15 @@ from transformers import AutoTokenizer
 
 
 # TODO: change data path, there should exist the key "prompt"
-with open('', encoding='utf-8') as f:
+with open('/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_prompt.json', encoding='utf-8') as f:
     data = json.load(f)[args.begin: args.end]
 
-tmp = [{'messages': [{'role': 'user', 'content': i['prompt']}]} for i in data]
+tmp = [{'messages': [{'role': 'user', 'content': i['content']}]} for i in data]
 
 
 # Create an LLM.
 # TODO
-model_path = 'Your-PATH-Here'
+model_path = '/lustre/fswork/projects/rech/mpz/uip95qy/Qwen2.5-0.5B'
 
 llm = LLM(model=model_path, trust_remote_code=True)
 

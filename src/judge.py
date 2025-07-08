@@ -17,7 +17,7 @@ from transformers import AutoTokenizer
 
 
 # TODO: change data file
-with open('', encoding='utf-8') as f:
+with open('/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_10_first_resp_process.json', encoding='utf-8') as f:
     data = json.load(f)[args.begin: args.end]
 
 
@@ -38,7 +38,7 @@ Final Judgement (if the Output accurately follows the Prompt): (Yes or No)""".fo
 tmp = [{'messages': [{'role': 'user', 'content': build_judge_template(i['prompt'], i['response'])}]} for i in data]
 
 # TODO
-model_path = 'Your-PATH-Here'
+model_path = '/lustre/fswork/projects/rech/mpz/uip95qy/Qwen2.5-0.5B'
 
 
 llm = LLM(model=model_path, trust_remote_code=True)
