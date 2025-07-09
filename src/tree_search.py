@@ -10,6 +10,18 @@ import random
 from ToT.task import *
 
 
+def get_tree(node):
+    tree = {
+        'prompt' : node.prompt,
+        'value' : node.V,
+        'response' : node.response,
+        'critique' : node.critique,
+        'refine_COT' : node.refine_COT,
+        'children' : []
+        }
+    for child in node.children:
+        tree['children'].append(get_tree(child))
+    return tree
 
 
 def chat_gpt(messages, counter, error_count):
@@ -38,6 +50,9 @@ def chat_gpt(messages, counter, error_count):
             # 保存响应到文件
             with open(output_file, 'a', encoding='utf-8') as f:
                 print(json.dumps(m, ensure_ascii=False), file=f)
+
+            with open(output_file_tree, 'a',encoding='utf-8') as f2:
+                print(json.dumps(get_tree(root), ensure_ascii=False), file=f2))
 
             responses.append(0)
 
@@ -98,6 +113,7 @@ if __name__ == '__main__':
     # TODO: change file path
     input_file = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/juge_process.json'
     output_file = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/tree.json'
+    output_file_tree = '/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/tree_complete.json'
 
     if not os.path.exists(output_file):
         x = open(output_file, 'w')
