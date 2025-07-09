@@ -5,9 +5,9 @@ import argparse
 
 parser = argparse.ArgumentParser(description="Process a string argument.")
 parser.add_argument('input_string', type=str, help='Input string')
-
+parser.add_argument('n_gpu', type=int, help='the number of GPU used')
 args = parser.parse_args()
-nb_gpu = 1
+nb_gpu = args.n_gpu
 def process_gen_res(input_path, output_path):
     d = []
     for i in range(nb_gpu):

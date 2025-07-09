@@ -16,7 +16,7 @@ def get_tree(node):
         'value' : node.V,
         'response' : node.response,
         'critique' : node.critique,
-        'refine_COT' : node.refine_COT,
+        'refine_COT' : node.refine_cot,
         'children' : []
         }
     for child in node.children:
@@ -52,7 +52,7 @@ def chat_gpt(messages, counter, error_count):
                 print(json.dumps(m, ensure_ascii=False), file=f)
 
             with open(output_file_tree, 'a',encoding='utf-8') as f2:
-                print(json.dumps(get_tree(root), ensure_ascii=False), file=f2))
+                print(json.dumps(get_tree(root), ensure_ascii=False), file=f2)
 
             responses.append(0)
 
@@ -118,8 +118,16 @@ if __name__ == '__main__':
     if not os.path.exists(output_file):
         x = open(output_file, 'w')
         x.close()
+    
+    if not os.path.exists(output_file_tree):
+        x = open(output_file_tree, 'w')
+        x.close()
+
     messages_list = get_messages_list()
     
+
+    
+
     print("total num: ", len(messages_list))
     s_time = time.time()
     responses = multi_process_chat_gpt(messages_list, num_processes=32)

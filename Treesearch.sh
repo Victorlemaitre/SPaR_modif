@@ -6,7 +6,7 @@
 #SBATCH --nodes=1 # reserve 2 nodes
 #SBATCH --ntasks=1 # reserve 16 tasks (or processes)
 #SBATCH --gres=gpu:1 # reserve 8 GPUs per node
-#SBATCH --cpus-per-task=1 # reserve 8 CPUs per task (and associated memory)
+#SBATCH --cpus-per-task=8 # reserve 8 CPUs per task (and associated memory)
 #SBATCH --time=01:00:00 # maximum allocation time "(HH:MM:SS)"
 #SBATCH --hint=nomultithread # deactivate hyperthreading
 #SBATCH --account=mpz@a100 # A100 accounting
@@ -27,14 +27,20 @@ set -x # activate echo of
 
 cd src
 
+n_gpu=1
+n_input=100
+n_input_judge=500
+: <<'COMMENT'
+bash infer.sh $n_gpu $n_input
 
-bash infer.sh
+python process_data.py "infer" $n_gpu
 
-python process_data.py "infer"
+bash judge.sh $n_gpu $n_input_judge
 
-bash judge.sh
+python process_data.py "judge" $n_gpu
 
-python process_data.py "judge"
+COMMENT
+
 
 MODEL_PATH="/lustre/fswork/projects/rech/mpz/uip95qy/Qwen2.5-0.5B"
 VLLM_PORT=8000                       # default port used by vllm
@@ -58,7 +64,7 @@ echo "[INFO] vLLM server is up."
 
 python tree_search.py
 
-python process_data.py "tree"
+python process_data.py "tree" $n_gpu
 
 
 # === OPTIONAL: KILL vLLM SERVER ===
