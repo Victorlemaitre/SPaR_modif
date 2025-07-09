@@ -16,6 +16,8 @@ import json
 from transformers import AutoTokenizer
 
 
+
+
 # TODO: change data path, there should exist the key "prompt"
 with open('/lustre/fswork/projects/rech/mpz/uip95qy/SPaR_modif/Stock_test_10/test_100_prompt.json', encoding='utf-8') as f:
     data = json.load(f)[args.begin: args.end]
